@@ -48,7 +48,7 @@ export class App extends Component {
     const newContactName = this.state.name.name;
     newContact.number = this.state.number;
 
-    if (this.state.contacts.find(element => element.name == newContactName)) {
+    if (this.state.contacts.find(element => element.name === newContactName)) {
       return alert(newContactName + ' is already in contacts');
     }
     this.setState({ contacts: [...this.state.contacts, newContact] });
