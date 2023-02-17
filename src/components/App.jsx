@@ -6,24 +6,25 @@ export class App extends Component {
   state = {
     contacts: [],
     filter: '',
-    name: '',
-    number: '',
   };
   handleChange = evt => {
     const { value, id, name } = evt.target;
-    if (name === 'concatName') {
+    if (name === 'contactName') {
       const Newcontact = { id: id, name: value };
       this.setState({ name: Newcontact });
     }
-    if (name === 'number') {
-      this.setState({ number: value });
-    }
-    if (name === 'number') {
-      this.setState({ number: value });
-    }
+
     if (name === 'filter') {
       this.setState({ filter: value });
     }
+  };
+  handleUser = (id, contactName, number) => {
+    if (this.state.contacts.find(element => element.name === contactName)) {
+      return alert(contactName + ' is already in contacts');
+    }
+    this.setState({
+      contacts: [...this.state.contacts, { name: contactName, number: number }],
+    });
   };
   handleRemoveData = evt => {
     let array = [...this.state.contacts];
@@ -41,19 +42,6 @@ export class App extends Component {
     };
     removeContact(nameToRemove);
   };
-  handleSubmit = evt => {
-    evt.preventDefault();
-
-    const newContact = this.state.name;
-    const newContactName = this.state.name.name;
-    newContact.number = this.state.number;
-
-    if (this.state.contacts.find(element => element.name === newContactName)) {
-      return alert(newContactName + ' is already in contacts');
-    }
-    this.setState({ contacts: [...this.state.contacts, newContact] });
-    // this.props.onSubmit({ ...this.state });
-  };
 
   render() {
     return (
@@ -68,7 +56,7 @@ export class App extends Component {
         }}
       >
         <h1>Phonebook</h1>
-        <ContactForm submit={this.handleSubmit} change={this.handleChange} />
+        <ContactForm onSubmit={this.handleUser} onChange={this.handleChange} />
         {this.state.contacts.length > 0 && (
           <div>
             <h2>Contacts</h2>
